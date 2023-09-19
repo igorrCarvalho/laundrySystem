@@ -1,13 +1,13 @@
 USE trybecashdb;
 
-CREATE TABLE order (
+CREATE TABLE orders (
     id INT NOT NULL AUTO_INCREMENT,
     item_name VARCHAR(45) NOT NULL,
     person_asked VARCHAR(45) NOT NULL,
     exact_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     item_price DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL,
-    total_price  
+    total_price DECIMAL(10,2) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -40,5 +40,5 @@ CREATE TABLE months_orders (
     order_id INT NOT NULL,
     PRIMARY KEY (month_order_id),
     FOREIGN KEY (month_id) REFERENCES months(id),
-    FOREIGN KEY (order_id) REFERENCES items(id)
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );

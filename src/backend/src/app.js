@@ -1,5 +1,5 @@
 const express = require('express');
-const { insert, show, showById, showMonths } = require('./db/itemDB');
+const { insert, show, showById, showMonths, showMonthsOrders } = require('./db/itemDB');
 const { searchForMonth } = require('./utils/functions');
 
 const app = express();
@@ -8,16 +8,16 @@ app.use(express.json());
 
 const API_URL = "/api/v1/";
 
-app.get(`${API_URL}item`, async (req, res) => {
+app.get(`${API_URL}orders`, async (req, res) => {
     try {
-        const [people] = await show();
-        res.status(200).json(people)
+        const [orders] = await show();
+        res.status(200).json(orders)
     } catch (error) {
         console.log(error);
     }
 })
 
-app.get(`${API_URL}item/:id`, async (req, res) => {
+app.get(`${API_URL}order/:id`, async (req, res) => {
     try {
         const { id } = req.params;
         const [[item]] = await showById(id);
@@ -30,10 +30,13 @@ app.get(`${API_URL}item/:id`, async (req, res) => {
     }
 });
 
-app.post(`${API_URL}item`, async (req, res) => {
-    const person = req.body;
+app.post(`${API_URL}order`, async (req, res) => {
+    const order = req.body;
+    const price = order.itemPrice;
+    const quant = order.quantity;
+    order.totalPrice = Number((price * quant).toFixed(2));
     try {
-        const [{insertId}] = await insert(person);
+        const [{insertId}] = await insert(order);
         const addMonth = await searchForMonth(insertId);
         res.status(201).json({ message: `Registered with id equals to ${insertId}` });
     } catch (error) {
@@ -47,6 +50,15 @@ app.get(`${API_URL}months`, async (req, res) => {
         res.status(200).json(months);
     } catch (error) {
         console.log(error)
+    }
+});
+
+app.get(`${API_URL}months/orders`, async (req, res) => {
+    try {
+        const [response] = await showMonthsOrders();
+        res.status(200).json(response);
+    } catch (err) {
+        console.log(err)
     }
 });
 
