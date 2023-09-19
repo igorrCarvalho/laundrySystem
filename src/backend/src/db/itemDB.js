@@ -1,10 +1,12 @@
 const conn = require('./connection');
 
-const insert = (item) => conn.execute(
+const insert = (item) => {
+  console.log(item)
+  return conn.execute(
     `INSERT INTO orders 
       (item_name, person_asked, item_price, quantity, total_price) VALUES (?, ?, ?, ?, ?)`,
     [item.itemName, item.personAsked, item.itemPrice, item.quantity, item.totalPrice],
-  );
+  )};
 
 const show = () => conn.execute(
     `SELECT * FROM orders`

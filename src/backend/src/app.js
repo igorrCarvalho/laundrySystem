@@ -1,9 +1,11 @@
 const express = require('express');
 const { insert, show, showById, showMonths, showMonthsOrders } = require('./db/itemDB');
 const { searchForMonth } = require('./utils/functions');
+var cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 const API_URL = "/api/v1/";
@@ -34,13 +36,13 @@ app.post(`${API_URL}order`, async (req, res) => {
     const order = req.body;
     const price = order.itemPrice;
     const quant = order.quantity;
-    order.totalPrice = Number((price * quant).toFixed(2));
+    order.totalPrice = Number((Number(price) * Number(quant)).toFixed(2));
     try {
         const [{insertId}] = await insert(order);
         const addMonth = await searchForMonth(insertId);
         res.status(201).json({ message: `Registered with id equals to ${insertId}` });
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 })
 

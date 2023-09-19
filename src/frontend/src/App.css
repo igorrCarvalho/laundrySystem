@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.formScreen {
+  height: 100%;
+  width: 100%;
+  background-color: #f8fafc;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.formDiv {
+    background-color: #f8fafc;
+    border: 1.5px solid #e4e8ee;
+    width: 18rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 0.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.a {
+  height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.inputPForm {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    border: 1px solid #e4e8ee;
+    background-color: #f8fafc;
+    padding: 0 0.75rem;
+    text-align: left;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    color: #64748b;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.inputPForm:hover {
+    border: 1px solid #94a3b8;
+    --tw-ring-color: #94a3b8;
 }
